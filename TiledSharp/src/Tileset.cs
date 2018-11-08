@@ -29,6 +29,14 @@ namespace TiledSharp
         public TmxImage Image {get; private set;}
         public TmxList<TmxTerrain> Terrains {get; private set;}
 
+        /// <summary>
+        /// spacechase0
+        /// We need to know what directory a tileset came from to load the image later.
+        /// Can't just load normally since I'm doing things from a zip flie.
+        /// </summary>
+        public static string LoadingDirectoryContext { get; set; }
+        public string DirectoryContext { get; private set; }
+
         // TSX file constructor
         public TmxTileset(XContainer xDoc, string tmxDir) :
             this(xDoc.Element("tileset"), tmxDir) { }
@@ -36,6 +44,8 @@ namespace TiledSharp
         // TMX tileset element constructor
         public TmxTileset(XElement xTileset, string tmxDir = "")
         {
+            DirectoryContext = LoadingDirectoryContext;
+
             var xFirstGid = xTileset.Attribute("firstgid");
             var source = (string) xTileset.Attribute("source");
 

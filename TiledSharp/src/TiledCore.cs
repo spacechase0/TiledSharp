@@ -18,6 +18,12 @@ namespace TiledSharp
     {
         public string TmxDirectory {get; private set;}
 
+        /// <summary>
+        /// spacechase0
+        /// Allows the user to load resources from a place other than disk.
+        /// </summary>
+        public static Func<string, Stream> ResourceLoader;
+
         public TmxDocument()
         {
             TmxDirectory = string.Empty;
@@ -47,6 +53,11 @@ namespace TiledSharp
                     }
                 }
                 TmxDirectory = String.Empty;
+            }
+            else if (ResourceLoader != null)
+            {
+                xDoc = XDocument.Load(ResourceLoader(filepath));
+                TmxDirectory = Path.GetDirectoryName(filepath);
             }
             else
             {

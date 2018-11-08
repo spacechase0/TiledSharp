@@ -37,8 +37,9 @@ namespace TiledSharp
             Load(ReadXml(filename));
         }
 
-        public TmxMap(Stream inputStream)
+        public TmxMap(Stream inputStream, string tilesetContext = "")
         {
+            TmxTileset.LoadingDirectoryContext = tilesetContext;
             Load(XDocument.Load(inputStream));
         }
 
